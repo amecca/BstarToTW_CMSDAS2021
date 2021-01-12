@@ -66,6 +66,7 @@ else:
 varnames = {
         'nbjet_loose':'loosebjets',
         'lead_jetPt':'p_{T}^{jet0}',
+        'lead_softdrop_mass':'m_{SoftDrop}^{jet0}'
     }
 
 
@@ -123,6 +124,11 @@ def select(setname,year):
 
     # Finally let's define the normalization weight of the sample as one variable as well
     a.Define('norm',str(norm))
+    
+    # Defining SoftDropMass for the leading jet
+    a.Define('lead_softdrop_mass', 'FatJet_msoftdrop[0]')
+    # And the cut on it
+    a.Cut('leadJet_mass_cut', 'lead_softdrop_mass>50')
 
     # A nice functionality of TIMBER is to print all the selections that we have done:
     a.PrintNodeTree(plotdir+'/signal_tree.dot',verbose=True)
@@ -136,6 +142,10 @@ def select(setname,year):
             hist_tuple = (histname,histname, 10,0,10)
         elif "Pt" in varname :
             hist_tuple = (histname,histname,30,400,2000)
+        elif "mass" in varname :
+            hist_tuple = (histname, histname, 30, 0,300)
+        else :
+            hist_tuple = (histname, histname, 25, 0, 500)
         hist = a.GetActiveNode().DataFrame.Histo1D(hist_tuple,varname,'norm') # Project dataframe into a histogram (hist name/binning tuple, variable to plot from dataframe, weight)
         hist.GetValue() # This gets the actual TH1 instead of a pointer to the TH1
         out.Add(varname,hist) # Add it to our group
