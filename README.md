@@ -12,6 +12,7 @@ mkdir b2g_exercise/
 cd b2g_exercise/
 cmsrel CMSSW_11_0_1
 cd CMSSW_11_0_1/src
+cmsenv
 ```
 
 ### Clone repo:
