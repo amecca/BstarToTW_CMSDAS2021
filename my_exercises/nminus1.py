@@ -198,6 +198,13 @@ def select(setname,year):
         hist = nminus1Nodes[nkey].DataFrame.Histo1D(hist_tuple,var,'norm')
         hist.GetValue()
         nminus1Hists.Add(var,hist)
+    
+    #a.SetActiveNode(nminus1Nodes['full'])
+    for var in ['lead_jet_deepAK8_MD_TvsQCD', 'sublead_jet_deepAK8_MD_TvsQCD', 'lead_jet_deepAK8_MD_WvsQCD', 'sublead_jet_deepAK8_MD_WvsQCD', 'softdrop_mass_ratio']:
+        hist_tuple = (var,prettynames[var],binning[var][0],binning[var][1],binning[var][2])
+        hist = a.DataFrame.Histo1D(hist_tuple,var,'norm')
+        hist.GetValue()
+        nminus1Hists.Add(var,hist)    
 		
     a.PrintNodeTree('my_exercises/nminus1_tree.dot')
     
